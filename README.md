@@ -6,7 +6,7 @@ SplitWeave is an AI-assisted full-stack web application for tracking and settlin
 
 ## Project status
 
-🧭 **Current phase:** Specification complete — repository foundation in progress.
+🧭 **Current phase:** Interactive frontend prototype complete — FastAPI backend is next.
 
 The application will be delivered incrementally: interactive frontend prototype, test-first FastAPI backend, frontend/backend integration, and SQLAlchemy persistence.
 
@@ -20,7 +20,7 @@ Shared expenses become difficult to reconcile when different people pay, only so
 - who owes and who should receive money; and
 - which repayments can settle the group.
 
-## Planned MVP capabilities
+## MVP capabilities
 
 - Create groups for trips, households, friends, or work teams.
 - Add, rename, deactivate, and reactivate group members.
@@ -67,7 +67,7 @@ splitweave/
 └── README.md
 ```
 
-The frontend and backend folders will be added in their respective homework stages.
+The `frontend/` application is implemented. The `backend/` folder and OpenAPI document will be added during the backend stage.
 
 ## Product specification
 
@@ -78,19 +78,34 @@ The complete MVP scope, business rules, domain model, API outline, acceptance cr
 - [x] Choose project and product name.
 - [x] Write the product specification.
 - [x] Establish repository documentation and agent guidance.
-- [ ] Build an interactive frontend against a centralized mock API.
+- [x] Build an interactive frontend against a centralized mock API.
 - [ ] Build a test-first FastAPI backend with an in-memory repository.
 - [ ] Connect the frontend to the backend.
 - [ ] Replace the mock repository with SQLAlchemy persistence.
 - [ ] Run automated and manual end-to-end verification.
 - [ ] Record a short product demo and publish the learning summary.
 
-## Local development
+## Frontend development
 
-Runtime setup and start commands will be added after the frontend and backend are implemented. The target toolchain is:
+Requirements: Node.js 24+ and npm 11+.
 
-- Python managed with [`uv`](https://docs.astral.sh/uv/)
-- Node.js and npm for the frontend
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Open [http://localhost:5173](http://localhost:5173). The prototype currently uses a centralized in-memory mock API in `frontend/src/api/`, so edits are intentionally reset when the page is reloaded.
+
+Available verification commands:
+
+```bash
+cd frontend
+npm test
+npm run build
+```
+
+The backend will be managed with [`uv`](https://docs.astral.sh/uv/) when it is introduced in the next stage.
 
 ## Scope boundary
 
@@ -104,4 +119,3 @@ This project follows a spec-first, test-conscious workflow using an AI coding as
 
 **Esila Nur Demirci**  
 [GitHub: @imend35](https://github.com/imend35)
-
