@@ -6,7 +6,7 @@ SplitWeave is an AI-assisted full-stack web application for tracking and settlin
 
 ## Project status
 
-🧭 **Current phase:** Interactive frontend prototype complete — FastAPI backend is next.
+🧭 **Current phase:** Frontend prototype and mock-store FastAPI backend complete — integration is next.
 
 The application will be delivered incrementally: interactive frontend prototype, test-first FastAPI backend, frontend/backend integration, and SQLAlchemy persistence.
 
@@ -79,7 +79,7 @@ The complete MVP scope, business rules, domain model, API outline, acceptance cr
 - [x] Write the product specification.
 - [x] Establish repository documentation and agent guidance.
 - [x] Build an interactive frontend against a centralized mock API.
-- [ ] Build a test-first FastAPI backend with an in-memory repository.
+- [x] Build a test-first FastAPI backend with an in-memory repository.
 - [ ] Connect the frontend to the backend.
 - [ ] Replace the mock repository with SQLAlchemy persistence.
 - [ ] Run automated and manual end-to-end verification.
@@ -87,7 +87,7 @@ The complete MVP scope, business rules, domain model, API outline, acceptance cr
 
 ## Frontend development
 
-Requirements: Node.js 24+ and npm 11+.
+Requirements: Node.js 22.12+ and npm.
 
 ```bash
 cd frontend
@@ -105,7 +105,32 @@ npm test
 npm run build
 ```
 
-The backend will be managed with [`uv`](https://docs.astral.sh/uv/) when it is introduced in the next stage.
+## Backend development
+
+Requirements: Python 3.12+ and [`uv`](https://docs.astral.sh/uv/).
+
+```bash
+cd backend
+uv sync
+uv run uvicorn app.main:app --reload --port 8000
+```
+
+The API is available at [http://localhost:8000/api/v1](http://localhost:8000/api/v1), with interactive documentation at [http://localhost:8000/docs](http://localhost:8000/docs). During this homework stage, the backend uses a deterministic in-memory repository seeded with an **Aegean Weekend** demo group; data resets when the process restarts.
+
+Run the backend quality checks with:
+
+```bash
+cd backend
+uv run pytest
+uv run ruff check .
+```
+
+Regenerate the committed API contract after route or schema changes:
+
+```bash
+cd backend
+uv run python scripts/export_openapi.py
+```
 
 ## Scope boundary
 

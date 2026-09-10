@@ -1,0 +1,1544 @@
+openapi: 3.1.0
+info:
+  title: SplitWeave API
+  description: REST API for transparent shared-expense tracking, deterministic splits,
+    balances, and repayments.
+  version: 0.1.0
+paths:
+  /api/v1/health:
+    get:
+      tags:
+      - System
+      summary: Health
+      operationId: health_api_v1_health_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+  /api/v1/groups:
+    get:
+      tags:
+      - Groups
+      summary: List Groups
+      operationId: list_groups_api_v1_groups_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/GroupSummaryResponse'
+                type: array
+                title: Response List Groups Api V1 Groups Get
+        '400':
+          description: Domain rule violation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflicting resource state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '422':
+          description: Request validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+    post:
+      tags:
+      - Groups
+      summary: Create Group
+      operationId: create_group_api_v1_groups_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupCreate'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupResponse'
+        '400':
+          description: Domain rule violation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflicting resource state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '422':
+          description: Request validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+  /api/v1/groups/{group_id}:
+    get:
+      tags:
+      - Groups
+      summary: Get Group
+      operationId: get_group_api_v1_groups__group_id__get
+      parameters:
+      - name: group_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Group Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupResponse'
+        '400':
+          description: Domain rule violation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflicting resource state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '422':
+          description: Request validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+    patch:
+      tags:
+      - Groups
+      summary: Update Group
+      operationId: update_group_api_v1_groups__group_id__patch
+      parameters:
+      - name: group_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Group Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GroupPatch'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupResponse'
+        '400':
+          description: Domain rule violation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflicting resource state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '422':
+          description: Request validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+  /api/v1/groups/{group_id}/members:
+    get:
+      tags:
+      - Members
+      summary: List Members
+      operationId: list_members_api_v1_groups__group_id__members_get
+      parameters:
+      - name: group_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Group Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MemberResponse'
+                title: Response List Members Api V1 Groups  Group Id  Members Get
+        '400':
+          description: Domain rule violation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflicting resource state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '422':
+          description: Request validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+    post:
+      tags:
+      - Members
+      summary: Add Member
+      operationId: add_member_api_v1_groups__group_id__members_post
+      parameters:
+      - name: group_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Group Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MemberCreate'
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemberResponse'
+        '400':
+          description: Domain rule violation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflicting resource state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '422':
+          description: Request validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+  /api/v1/groups/{group_id}/members/{member_id}:
+    patch:
+      tags:
+      - Members
+      summary: Update Member
+      operationId: update_member_api_v1_groups__group_id__members__member_id__patch
+      parameters:
+      - name: group_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Group Id
+      - name: member_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Member Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MemberPatch'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemberResponse'
+        '400':
+          description: Domain rule violation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflicting resource state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '422':
+          description: Request validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+  /api/v1/groups/{group_id}/expenses:
+    get:
+      tags:
+      - Expenses
+      summary: List Expenses
+      operationId: list_expenses_api_v1_groups__group_id__expenses_get
+      parameters:
+      - name: group_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Group Id
+      - name: search
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+            maxLength: 120
+          - type: 'null'
+          title: Search
+      - name: category
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - $ref: '#/components/schemas/ExpenseCategory'
+          - type: 'null'
+          title: Category
+      - name: payerId
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Payerid
+      - name: participantId
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Participantid
+      - name: fromDate
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Fromdate
+      - name: toDate
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+            format: date
+          - type: 'null'
+          title: Todate
+      - name: sort
+        in: query
+        required: false
+        schema:
+          enum:
+          - newest
+          - oldest
+          type: string
+          default: newest
+          title: Sort
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExpenseResponse'
+                title: Response List Expenses Api V1 Groups  Group Id  Expenses Get
+        '400':
+          description: Domain rule violation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflicting resource state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '422':
+          description: Request validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+    post:
+      tags:
+      - Expenses
+      summary: Create Expense
+      operationId: create_expense_api_v1_groups__group_id__expenses_post
+      parameters:
+      - name: group_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Group Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExpenseWrite'
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExpenseResponse'
+        '400':
+          description: Domain rule violation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflicting resource state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '422':
+          description: Request validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+  /api/v1/groups/{group_id}/expenses/{expense_id}:
+    get:
+      tags:
+      - Expenses
+      summary: Get Expense
+      operationId: get_expense_api_v1_groups__group_id__expenses__expense_id__get
+      parameters:
+      - name: group_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Group Id
+      - name: expense_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Expense Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExpenseResponse'
+        '400':
+          description: Domain rule violation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflicting resource state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '422':
+          description: Request validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+    put:
+      tags:
+      - Expenses
+      summary: Update Expense
+      operationId: update_expense_api_v1_groups__group_id__expenses__expense_id__put
+      parameters:
+      - name: group_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Group Id
+      - name: expense_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Expense Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExpenseWrite'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExpenseResponse'
+        '400':
+          description: Domain rule violation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflicting resource state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '422':
+          description: Request validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+    delete:
+      tags:
+      - Expenses
+      summary: Delete Expense
+      operationId: delete_expense_api_v1_groups__group_id__expenses__expense_id__delete
+      parameters:
+      - name: group_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Group Id
+      - name: expense_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Expense Id
+      responses:
+        '204':
+          description: Successful Response
+        '400':
+          description: Domain rule violation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflicting resource state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '422':
+          description: Request validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+  /api/v1/groups/{group_id}/balances:
+    get:
+      tags:
+      - Balances
+      summary: Get Balances
+      operationId: get_balances_api_v1_groups__group_id__balances_get
+      parameters:
+      - name: group_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Group Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupBalancesResponse'
+        '400':
+          description: Domain rule violation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflicting resource state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '422':
+          description: Request validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+  /api/v1/groups/{group_id}/settlement-suggestions:
+    get:
+      tags:
+      - Settlements
+      summary: Get Settlement Suggestions
+      operationId: get_settlement_suggestions_api_v1_groups__group_id__settlement_suggestions_get
+      parameters:
+      - name: group_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Group Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SettlementSuggestionResponse'
+                title: Response Get Settlement Suggestions Api V1 Groups  Group Id  Settlement
+                  Suggestions Get
+        '400':
+          description: Domain rule violation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflicting resource state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '422':
+          description: Request validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+  /api/v1/groups/{group_id}/settlements:
+    get:
+      tags:
+      - Settlements
+      summary: List Settlements
+      operationId: list_settlements_api_v1_groups__group_id__settlements_get
+      parameters:
+      - name: group_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Group Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SettlementResponse'
+                title: Response List Settlements Api V1 Groups  Group Id  Settlements
+                  Get
+        '400':
+          description: Domain rule violation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflicting resource state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '422':
+          description: Request validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+    post:
+      tags:
+      - Settlements
+      summary: Create Settlement
+      operationId: create_settlement_api_v1_groups__group_id__settlements_post
+      parameters:
+      - name: group_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Group Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SettlementCreate'
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SettlementResponse'
+        '400':
+          description: Domain rule violation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflicting resource state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '422':
+          description: Request validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+  /api/v1/groups/{group_id}/settlements/{settlement_id}:
+    delete:
+      tags:
+      - Settlements
+      summary: Delete Settlement
+      operationId: delete_settlement_api_v1_groups__group_id__settlements__settlement_id__delete
+      parameters:
+      - name: group_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Group Id
+      - name: settlement_id
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Settlement Id
+      responses:
+        '204':
+          description: Successful Response
+        '400':
+          description: Domain rule violation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflicting resource state
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '422':
+          description: Request validation failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+components:
+  schemas:
+    ActivityResponse:
+      properties:
+        id:
+          type: string
+          title: Id
+        kind:
+          type: string
+          title: Kind
+        title:
+          type: string
+          title: Title
+        detail:
+          type: string
+          title: Detail
+        createdAt:
+          type: string
+          format: date-time
+          title: Createdat
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - kind
+      - title
+      - detail
+      - createdAt
+      title: ActivityResponse
+    Currency:
+      type: string
+      enum:
+      - TRY
+      - USD
+      - EUR
+      - GBP
+      title: Currency
+    ErrorBody:
+      properties:
+        code:
+          type: string
+          title: Code
+        message:
+          type: string
+          title: Message
+        details:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+          title: Details
+      additionalProperties: false
+      type: object
+      required:
+      - code
+      - message
+      - details
+      title: ErrorBody
+    ErrorEnvelope:
+      properties:
+        error:
+          $ref: '#/components/schemas/ErrorBody'
+      additionalProperties: false
+      type: object
+      required:
+      - error
+      title: ErrorEnvelope
+    ExpenseCategory:
+      type: string
+      enum:
+      - food_drink
+      - groceries
+      - transport
+      - accommodation
+      - utilities
+      - entertainment
+      - health
+      - shopping
+      - other
+      title: ExpenseCategory
+    ExpenseParticipantInput:
+      properties:
+        memberId:
+          type: string
+          minLength: 1
+          title: Memberid
+        inputValue:
+          type: string
+          maxLength: 30
+          minLength: 1
+          title: Inputvalue
+          default: '1'
+        position:
+          type: integer
+          maximum: 999.0
+          minimum: 0.0
+          title: Position
+      additionalProperties: false
+      type: object
+      required:
+      - memberId
+      - position
+      title: ExpenseParticipantInput
+    ExpenseResponse:
+      properties:
+        id:
+          type: string
+          title: Id
+        groupId:
+          type: string
+          title: Groupid
+        title:
+          type: string
+          title: Title
+        amount:
+          type: string
+          title: Amount
+        expenseDate:
+          type: string
+          format: date
+          title: Expensedate
+        category:
+          $ref: '#/components/schemas/ExpenseCategory'
+        paidByMemberId:
+          type: string
+          title: Paidbymemberid
+        splitMethod:
+          $ref: '#/components/schemas/SplitMethod'
+        shares:
+          items:
+            $ref: '#/components/schemas/ExpenseShareResponse'
+          type: array
+          title: Shares
+        note:
+          type: string
+          title: Note
+        createdAt:
+          type: string
+          format: date-time
+          title: Createdat
+        updatedAt:
+          type: string
+          format: date-time
+          title: Updatedat
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - groupId
+      - title
+      - amount
+      - expenseDate
+      - category
+      - paidByMemberId
+      - splitMethod
+      - shares
+      - note
+      - createdAt
+      - updatedAt
+      title: ExpenseResponse
+    ExpenseShareResponse:
+      properties:
+        memberId:
+          type: string
+          title: Memberid
+        inputValue:
+          type: string
+          title: Inputvalue
+        allocatedAmount:
+          type: string
+          title: Allocatedamount
+        position:
+          type: integer
+          title: Position
+      additionalProperties: false
+      type: object
+      required:
+      - memberId
+      - inputValue
+      - allocatedAmount
+      - position
+      title: ExpenseShareResponse
+    ExpenseWrite:
+      properties:
+        title:
+          type: string
+          maxLength: 120
+          minLength: 2
+          title: Title
+        amount:
+          type: string
+          title: Amount
+        expenseDate:
+          type: string
+          format: date
+          title: Expensedate
+        category:
+          $ref: '#/components/schemas/ExpenseCategory'
+        paidByMemberId:
+          type: string
+          minLength: 1
+          title: Paidbymemberid
+        splitMethod:
+          $ref: '#/components/schemas/SplitMethod'
+        participants:
+          items:
+            $ref: '#/components/schemas/ExpenseParticipantInput'
+          type: array
+          maxItems: 100
+          minItems: 1
+          title: Participants
+        note:
+          type: string
+          maxLength: 500
+          title: Note
+          default: ''
+      additionalProperties: false
+      type: object
+      required:
+      - title
+      - amount
+      - expenseDate
+      - category
+      - paidByMemberId
+      - splitMethod
+      - participants
+      title: ExpenseWrite
+    GroupBalancesResponse:
+      properties:
+        totalSpent:
+          type: string
+          title: Totalspent
+        unsettled:
+          type: string
+          title: Unsettled
+        balances:
+          items:
+            $ref: '#/components/schemas/MemberBalanceResponse'
+          type: array
+          title: Balances
+      additionalProperties: false
+      type: object
+      required:
+      - totalSpent
+      - unsettled
+      - balances
+      title: GroupBalancesResponse
+    GroupCreate:
+      properties:
+        name:
+          type: string
+          maxLength: 80
+          minLength: 2
+          title: Name
+        description:
+          type: string
+          maxLength: 300
+          title: Description
+          default: ''
+        groupType:
+          $ref: '#/components/schemas/GroupType'
+        currency:
+          $ref: '#/components/schemas/Currency'
+        memberNames:
+          items:
+            type: string
+            maxLength: 60
+            minLength: 1
+          type: array
+          maxItems: 100
+          title: Membernames
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - groupType
+      - currency
+      title: GroupCreate
+    GroupPatch:
+      properties:
+        name:
+          anyOf:
+          - type: string
+            maxLength: 80
+            minLength: 2
+          - type: 'null'
+          title: Name
+        description:
+          anyOf:
+          - type: string
+            maxLength: 300
+          - type: 'null'
+          title: Description
+        groupType:
+          anyOf:
+          - $ref: '#/components/schemas/GroupType'
+          - type: 'null'
+        currency:
+          anyOf:
+          - $ref: '#/components/schemas/Currency'
+          - type: 'null'
+        isArchived:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Isarchived
+      additionalProperties: false
+      type: object
+      title: GroupPatch
+    GroupResponse:
+      properties:
+        id:
+          type: string
+          title: Id
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+        groupType:
+          $ref: '#/components/schemas/GroupType'
+        currency:
+          $ref: '#/components/schemas/Currency'
+        isArchived:
+          type: boolean
+          title: Isarchived
+        createdAt:
+          type: string
+          format: date-time
+          title: Createdat
+        updatedAt:
+          type: string
+          format: date-time
+          title: Updatedat
+        members:
+          items:
+            $ref: '#/components/schemas/MemberResponse'
+          type: array
+          title: Members
+        expenses:
+          items:
+            $ref: '#/components/schemas/ExpenseResponse'
+          type: array
+          title: Expenses
+        settlements:
+          items:
+            $ref: '#/components/schemas/SettlementResponse'
+          type: array
+          title: Settlements
+        activities:
+          items:
+            $ref: '#/components/schemas/ActivityResponse'
+          type: array
+          title: Activities
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - name
+      - description
+      - groupType
+      - currency
+      - isArchived
+      - createdAt
+      - updatedAt
+      - members
+      - expenses
+      - settlements
+      - activities
+      title: GroupResponse
+    GroupSummaryResponse:
+      properties:
+        id:
+          type: string
+          title: Id
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+        groupType:
+          $ref: '#/components/schemas/GroupType'
+        currency:
+          $ref: '#/components/schemas/Currency'
+        isArchived:
+          type: boolean
+          title: Isarchived
+        memberCount:
+          type: integer
+          title: Membercount
+        expenseCount:
+          type: integer
+          title: Expensecount
+        totalSpent:
+          type: string
+          title: Totalspent
+        unsettled:
+          type: string
+          title: Unsettled
+        memberPreview:
+          items:
+            $ref: '#/components/schemas/MemberResponse'
+          type: array
+          title: Memberpreview
+        updatedAt:
+          type: string
+          format: date-time
+          title: Updatedat
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - name
+      - description
+      - groupType
+      - currency
+      - isArchived
+      - memberCount
+      - expenseCount
+      - totalSpent
+      - unsettled
+      - memberPreview
+      - updatedAt
+      title: GroupSummaryResponse
+    GroupType:
+      type: string
+      enum:
+      - trip
+      - household
+      - friends
+      - work
+      - other
+      title: GroupType
+    HealthResponse:
+      properties:
+        status:
+          type: string
+          title: Status
+      additionalProperties: false
+      type: object
+      required:
+      - status
+      title: HealthResponse
+    MemberBalanceResponse:
+      properties:
+        memberId:
+          type: string
+          title: Memberid
+        memberName:
+          type: string
+          title: Membername
+        memberColor:
+          type: string
+          title: Membercolor
+        isActive:
+          type: boolean
+          title: Isactive
+        position:
+          type: integer
+          title: Position
+        paid:
+          type: string
+          title: Paid
+        owed:
+          type: string
+          title: Owed
+        settlementsSent:
+          type: string
+          title: Settlementssent
+        settlementsReceived:
+          type: string
+          title: Settlementsreceived
+        net:
+          type: string
+          title: Net
+        netMinorUnits:
+          type: string
+          title: Netminorunits
+      additionalProperties: false
+      type: object
+      required:
+      - memberId
+      - memberName
+      - memberColor
+      - isActive
+      - position
+      - paid
+      - owed
+      - settlementsSent
+      - settlementsReceived
+      - net
+      - netMinorUnits
+      title: MemberBalanceResponse
+    MemberCreate:
+      properties:
+        name:
+          type: string
+          maxLength: 60
+          minLength: 1
+          title: Name
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      title: MemberCreate
+    MemberPatch:
+      properties:
+        name:
+          anyOf:
+          - type: string
+            maxLength: 60
+            minLength: 1
+          - type: 'null'
+          title: Name
+        isActive:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          title: Isactive
+      additionalProperties: false
+      type: object
+      title: MemberPatch
+    MemberResponse:
+      properties:
+        id:
+          type: string
+          title: Id
+        name:
+          type: string
+          title: Name
+        color:
+          type: string
+          title: Color
+        isActive:
+          type: boolean
+          title: Isactive
+        createdAt:
+          type: string
+          format: date-time
+          title: Createdat
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - name
+      - color
+      - isActive
+      - createdAt
+      title: MemberResponse
+    SettlementCreate:
+      properties:
+        fromMemberId:
+          type: string
+          minLength: 1
+          title: Frommemberid
+        toMemberId:
+          type: string
+          minLength: 1
+          title: Tomemberid
+        amount:
+          type: string
+          title: Amount
+        settlementDate:
+          type: string
+          format: date
+          title: Settlementdate
+        note:
+          type: string
+          maxLength: 300
+          title: Note
+          default: ''
+      additionalProperties: false
+      type: object
+      required:
+      - fromMemberId
+      - toMemberId
+      - amount
+      - settlementDate
+      title: SettlementCreate
+    SettlementResponse:
+      properties:
+        id:
+          type: string
+          title: Id
+        groupId:
+          type: string
+          title: Groupid
+        fromMemberId:
+          type: string
+          title: Frommemberid
+        toMemberId:
+          type: string
+          title: Tomemberid
+        amount:
+          type: string
+          title: Amount
+        settlementDate:
+          type: string
+          format: date
+          title: Settlementdate
+        note:
+          type: string
+          title: Note
+        createdAt:
+          type: string
+          format: date-time
+          title: Createdat
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - groupId
+      - fromMemberId
+      - toMemberId
+      - amount
+      - settlementDate
+      - note
+      - createdAt
+      title: SettlementResponse
+    SettlementSuggestionResponse:
+      properties:
+        fromMemberId:
+          type: string
+          title: Frommemberid
+        fromMemberName:
+          type: string
+          title: Frommembername
+        toMemberId:
+          type: string
+          title: Tomemberid
+        toMemberName:
+          type: string
+          title: Tomembername
+        amount:
+          type: string
+          title: Amount
+      additionalProperties: false
+      type: object
+      required:
+      - fromMemberId
+      - fromMemberName
+      - toMemberId
+      - toMemberName
+      - amount
+      title: SettlementSuggestionResponse
+    SplitMethod:
+      type: string
+      enum:
+      - equal
+      - exact
+      - percentage
+      - shares
+      title: SplitMethod
