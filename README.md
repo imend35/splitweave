@@ -6,7 +6,7 @@ SplitWeave is an AI-assisted full-stack web application for tracking and settlin
 
 ## Project status
 
-🧭 **Current phase:** Frontend prototype and mock-store FastAPI backend complete — integration is next.
+🧭 **Current phase:** Frontend/backend integration complete — SQLAlchemy persistence is next.
 
 The application will be delivered incrementally: interactive frontend prototype, test-first FastAPI backend, frontend/backend integration, and SQLAlchemy persistence.
 
@@ -80,7 +80,7 @@ The complete MVP scope, business rules, domain model, API outline, acceptance cr
 - [x] Establish repository documentation and agent guidance.
 - [x] Build an interactive frontend against a centralized mock API.
 - [x] Build a test-first FastAPI backend with an in-memory repository.
-- [ ] Connect the frontend to the backend.
+- [x] Connect the frontend to the backend.
 - [ ] Replace the mock repository with SQLAlchemy persistence.
 - [ ] Run automated and manual end-to-end verification.
 - [ ] Record a short product demo and publish the learning summary.
@@ -95,7 +95,7 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173). The prototype currently uses a centralized in-memory mock API in `frontend/src/api/`, so edits are intentionally reset when the page is reloaded.
+Open [http://localhost:5173](http://localhost:5173). The frontend talks to FastAPI at `http://localhost:8000/api/v1` by default. Backend access remains centralized in `frontend/src/api/`; set `VITE_USE_MOCK_API=true` only when demonstrating the standalone mocked prototype.
 
 Available verification commands:
 
@@ -116,6 +116,8 @@ uv run uvicorn app.main:app --reload --port 8000
 ```
 
 The API is available at [http://localhost:8000/api/v1](http://localhost:8000/api/v1), with interactive documentation at [http://localhost:8000/docs](http://localhost:8000/docs). During this homework stage, the backend uses a deterministic in-memory repository seeded with an **Aegean Weekend** demo group; data resets when the process restarts.
+
+Run the frontend and backend commands in separate terminals for full-stack development. The allowed browser origins and frontend API URL can be overridden with the variables documented in `.env.example`.
 
 Run the backend quality checks with:
 
