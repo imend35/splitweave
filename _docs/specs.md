@@ -781,18 +781,18 @@ The seed must be deterministic and safe to recreate.
 
 The Homework 2 MVP is done when:
 
-- [ ] `_docs/specs.md` reflects the implemented scope.
-- [ ] `.gitignore`, `README.md`, and `AGENTS.md` are present.
-- [ ] Frontend starts with the documented Node.js command.
-- [ ] Backend starts with the documented `uv` command.
-- [ ] Frontend uses the configured FastAPI base URL.
-- [ ] SQLAlchemy persistence replaces the mock backend repository.
-- [ ] A fresh install can be completed from README instructions.
-- [ ] Automated backend tests pass with one documented command.
+- [x] `_docs/specs.md` reflects the implemented scope.
+- [x] `.gitignore`, `README.md`, and `AGENTS.md` are present.
+- [x] Frontend starts with the documented Node.js command.
+- [x] Backend starts with the documented `uv` command.
+- [x] Frontend uses the configured FastAPI base URL.
+- [x] SQLAlchemy persistence replaces the mock backend repository.
+- [x] A fresh install can be completed from README instructions.
+- [x] Automated backend tests pass with one documented command.
 - [ ] The main user flow passes manual browser verification.
-- [ ] Data persists after refresh and backend restart.
-- [ ] Empty, loading, validation, success, and error states are handled.
-- [ ] No secrets, environment files, local databases, caches, or build outputs are committed.
+- [x] Data persists after refresh and backend restart.
+- [x] Empty, loading, validation, success, and error states are handled.
+- [x] No secrets, environment files, local databases, caches, or build outputs are committed.
 - [ ] The repository contains a final commit whose SHA can be submitted.
 
 ## 20. Future roadmap

@@ -19,3 +19,7 @@ class GroupRepository(ABC):
     @abstractmethod
     def clear(self) -> None:
         """Remove all records. Intended for tests and deterministic seeding."""
+
+    def close(self) -> None:
+        """Release repository resources when the application shuts down."""
+        return None

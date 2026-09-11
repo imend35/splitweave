@@ -12,7 +12,8 @@ from app.api import router
 from app.config import Settings, get_settings
 from app.errors import DomainError
 from app.repositories.base import GroupRepository
-from app.repositories.memory import InMemoryRepository
+from app.repositories.sqlalchemy import SQLAlchemyRepository
+from app.seed import build_demo_group
 from app.services.splitweave import SplitWeaveService
 
 logger = logging.getLogger("splitweave")
@@ -28,12 +29,18 @@ def create_app(
     settings: Settings | None = None,
 ) -> FastAPI:
     active_settings = settings or get_settings()
-    active_repository = repository or InMemoryRepository(seed=True)
+    if repository is None:
+        active_repository = SQLAlchemyRepository(active_settings.database_url)
+        if not active_repository.list():
+            active_repository.save(build_demo_group())
+    else:
+        active_repository = repository
 
     @asynccontextmanager
     async def lifespan(_: FastAPI) -> AsyncIterator[None]:
         logger.info("SplitWeave API started with %s", type(active_repository).__name__)
         yield
+        active_repository.close()
 
     app = FastAPI(
         title=active_settings.app_name,

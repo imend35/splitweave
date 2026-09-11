@@ -6,9 +6,9 @@ SplitWeave is an AI-assisted full-stack web application for tracking and settlin
 
 ## Project status
 
-🧭 **Current phase:** Frontend/backend integration complete — SQLAlchemy persistence is next.
+🧭 **Current phase:** Full-stack MVP complete — final acceptance and submission preparation are next.
 
-The application will be delivered incrementally: interactive frontend prototype, test-first FastAPI backend, frontend/backend integration, and SQLAlchemy persistence.
+The application was delivered incrementally: interactive frontend prototype, test-first FastAPI backend, frontend/backend integration, and SQLAlchemy persistence.
 
 ## Why SplitWeave?
 
@@ -33,7 +33,7 @@ Shared expenses become difficult to reconcile when different people pay, only so
 - Filter expense history and review group activity.
 - Use the main flows from desktop and mobile browsers.
 
-## Planned architecture
+## Architecture
 
 | Layer | Technology | Responsibility |
 | --- | --- | --- |
@@ -67,7 +67,7 @@ splitweave/
 └── README.md
 ```
 
-The `frontend/` application is implemented. The `backend/` folder and OpenAPI document will be added during the backend stage.
+Both applications are implemented. The committed `_docs/openapi.yaml` contract is generated directly from the FastAPI application so the documented API stays aligned with the backend.
 
 ## Product specification
 
@@ -81,8 +81,9 @@ The complete MVP scope, business rules, domain model, API outline, acceptance cr
 - [x] Build an interactive frontend against a centralized mock API.
 - [x] Build a test-first FastAPI backend with an in-memory repository.
 - [x] Connect the frontend to the backend.
-- [ ] Replace the mock repository with SQLAlchemy persistence.
-- [ ] Run automated and manual end-to-end verification.
+- [x] Replace the mock repository with SQLAlchemy persistence.
+- [x] Run automated full-stack and database-restart verification.
+- [ ] Complete the manual browser acceptance walkthrough.
 - [ ] Record a short product demo and publish the learning summary.
 
 ## Frontend development
@@ -115,9 +116,9 @@ uv sync
 uv run uvicorn app.main:app --reload --port 8000
 ```
 
-The API is available at [http://localhost:8000/api/v1](http://localhost:8000/api/v1), with interactive documentation at [http://localhost:8000/docs](http://localhost:8000/docs). During this homework stage, the backend uses a deterministic in-memory repository seeded with an **Aegean Weekend** demo group; data resets when the process restarts.
+The API is available at [http://localhost:8000/api/v1](http://localhost:8000/api/v1), with interactive documentation at [http://localhost:8000/docs](http://localhost:8000/docs). The backend uses SQLAlchemy with `sqlite:///./splitweave.db` by default and seeds an **Aegean Weekend** demo group only when the database is empty. Data persists across refreshes and backend restarts.
 
-Run the frontend and backend commands in separate terminals for full-stack development. The allowed browser origins and frontend API URL can be overridden with the variables documented in `.env.example`.
+Run the frontend and backend commands in separate terminals for full-stack development. The database URL, allowed browser origins, and frontend API URL can be overridden with the variables documented in `.env.example`. Any SQLAlchemy-supported database can replace SQLite without changing the service layer.
 
 Run the backend quality checks with:
 

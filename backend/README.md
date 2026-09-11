@@ -1,6 +1,6 @@
 # SplitWeave backend
 
-FastAPI service for SplitWeave, managed with `uv`. This stage uses an in-memory repository behind a persistence interface; SQLAlchemy will replace only that implementation in the database stage.
+FastAPI service for SplitWeave, managed with `uv`. The default repository uses SQLAlchemy and SQLite behind a database-agnostic persistence interface. An in-memory implementation remains available for isolated tests.
 
 ## Start
 
@@ -12,6 +12,8 @@ uv run uvicorn app.main:app --reload --port 8000
 - API root: `http://localhost:8000/api/v1`
 - Health check: `http://localhost:8000/api/v1/health`
 - Swagger UI: `http://localhost:8000/docs`
+
+The default database is `sqlite:///./splitweave.db`. Override it with `SPLITWEAVE_DATABASE_URL`; the service and API layers do not depend on SQLite-specific models or queries.
 
 ## Verify
 
