@@ -80,6 +80,8 @@ Then open <http://localhost:5173> in two browser windows and verify:
 
 ## 60–90 second demo outline
 
+For the exact sample data, second-by-second shot list, narration, and recording checklist, see [`demo-video-guide.md`](demo-video-guide.md).
+
 1. Show the groups screen and open **Aegean Weekend**.
 2. Briefly show members, expense history, balances, and settlement suggestions.
 3. Add one expense and show the recalculated balances.
