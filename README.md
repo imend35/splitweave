@@ -2,11 +2,11 @@
 
 > **Shared expenses, woven fairly.**
 
-SplitWeave is an AI-assisted full-stack web application for tracking and settling shared expenses across trips, households, friend groups, and work teams. It is being built for **Homework 2 of the DataTalksClub AI Dev Tools Zoomcamp 2026**.
+SplitWeave is an AI-assisted full-stack web application for tracking and settling shared expenses across trips, households, friend groups, and work teams. It was built for **Homework 2 of the DataTalksClub AI Dev Tools Zoomcamp 2026**.
 
 ## Project status
 
-🧭 **Current phase:** Full-stack MVP complete — final acceptance and submission preparation are next.
+✅ **Current phase:** Full-stack MVP complete — only the local browser walkthrough and optional demo recording remain.
 
 The application was delivered incrementally: interactive frontend prototype, test-first FastAPI backend, frontend/backend integration, and SQLAlchemy persistence.
 
@@ -72,6 +72,8 @@ Both applications are implemented. The committed `_docs/openapi.yaml` contract i
 ## Product specification
 
 The complete MVP scope, business rules, domain model, API outline, acceptance criteria, and test strategy are documented in [`_docs/specs.md`](_docs/specs.md).
+
+The exact homework answers, verification evidence, and a short demo walkthrough are collected in [`_docs/homework-submission.md`](_docs/homework-submission.md).
 
 ## Delivery roadmap
 

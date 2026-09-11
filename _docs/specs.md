@@ -793,7 +793,7 @@ The Homework 2 MVP is done when:
 - [x] Data persists after refresh and backend restart.
 - [x] Empty, loading, validation, success, and error states are handled.
 - [x] No secrets, environment files, local databases, caches, or build outputs are committed.
-- [ ] The repository contains a final commit whose SHA can be submitted.
+- [x] The repository contains a final commit whose SHA can be submitted.
 
 ## 20. Future roadmap
 
